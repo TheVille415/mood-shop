@@ -1,6 +1,11 @@
 import data from './data.js'
 const itemsContainer = document.getElementById('items')
 
+const itemList = document.getElementById('item-list')
+const cartQty = document.getElementById('cart-qty')
+const cartTotal = document.getElementById('cart-total')
+
+//-------------------------------------------
 for (let i=0; i<data.length; ++i) {
     // create a new div element and give it a class name
     let newDiv = document.createElement('div');
@@ -38,7 +43,6 @@ for (let i=0; i<data.length; ++i) {
     itemsContainer.appendChild(newDiv)
 }
 
-
 const cart = []
 //-------------------------------------------
 // Add Item
@@ -54,15 +58,22 @@ function addItem(name, price) {
 }
 //-------------------------------------------
 // Show Items
-function showItems(){
+function showItems() {
     const qty = getQty()
-    console.log(`You have ${getQty()} item(s) in your cart`) 
+    //console.log(`You have ${getQty()} item(s) in your cart`) 
+    cartQty.innerHTML = `You have ${getQty()} item(s) in your cart`
 
+    let itemStr = ''
     for(let i = 0; i < cart.length; i+= 1){
-        console.log(`- ${cart[i].name} $${cart[i].price} x ${cart[i].qty} `)
+        //console.log(`- ${cart[i].name} $${cart[i].price} x ${cart[i].qty} `)
+        const { name, price, qty } = cart[i]
+
+        itemStr += `<li>${name} $${price} x ${qty} = ${qty * price}</li>`
     }
-    //toFixed returns as string
-    console.log(`Total in cart is $${getTotal()}`)
+    itemList.innerHTML = itemStr
+
+    //console.log(`Total in cart is $${getTotal()}`)
+    cartTotal.innerHTML = `Total in cart is $${getTotal()}`
 }
 //-------------------------------------------
 //Get Qty
@@ -97,6 +108,7 @@ function removeItem(name, qty = 0) {
     }
 }
  //-------------------------------------------
+console.log(itemList)
 addItem('apple', 0.99)
 addItem('apple', 0.99)
 addItem('pear', 0.79)
